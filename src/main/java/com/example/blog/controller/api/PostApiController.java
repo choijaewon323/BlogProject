@@ -10,12 +10,12 @@ public class PostApiController {
     private PostService postService;
 
     @PostMapping("/api/post")
-    public void createPost(@RequestBody String title, @RequestBody String content) {
+    public void createPost(String title, String content) {
         postService.createPost(title, content);
     }
 
     @PutMapping("/api/post/{id}")
-    public void updatePost(@PathVariable Long id, @RequestBody String title, @RequestBody String content) {
+    public void updatePost(@PathVariable Long id, String title, String content) {
         postService.updatePost(title, content, id);
     }
 
