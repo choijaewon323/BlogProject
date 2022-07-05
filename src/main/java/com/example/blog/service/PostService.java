@@ -19,6 +19,13 @@ public class PostService {
     }
 
     @Transactional
+    public void updatePost(String title, String content, Long id) {
+        Post findPost = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+
+        findPost.update(title, content);
+    }
+
+    @Transactional
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }

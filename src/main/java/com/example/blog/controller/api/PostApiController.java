@@ -2,7 +2,6 @@ package com.example.blog.controller.api;
 
 import com.example.blog.service.PostService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -16,8 +15,8 @@ public class PostApiController {
     }
 
     @PutMapping("/api/post/{id}")
-    public void updatePost(@RequestBody String title, @RequestBody String content) {
-
+    public void updatePost(@PathVariable Long id, @RequestBody String title, @RequestBody String content) {
+        postService.updatePost(title, content, id);
     }
 
     @DeleteMapping("/api/post/{id}")
