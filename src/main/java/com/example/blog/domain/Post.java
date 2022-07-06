@@ -2,7 +2,6 @@ package com.example.blog.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 

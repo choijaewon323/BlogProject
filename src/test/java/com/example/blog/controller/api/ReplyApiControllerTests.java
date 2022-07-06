@@ -4,6 +4,7 @@ import com.example.blog.domain.Post;
 import com.example.blog.domain.PostRepository;
 import com.example.blog.domain.Reply;
 import com.example.blog.domain.ReplyRepository;
+import com.example.blog.dto.ReplyRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -42,14 +40,12 @@ public class ReplyApiControllerTests {
     void createReplyTest() throws Exception {
         Post newPost = new Post("제목1", "내용1");
         postRepository.save(newPost);
-        Map<String, String> input = new HashMap<>();
-        input.put("writer", "작성자1");
-        input.put("content", "내용2");
+        ReplyRequestDto requestDto = new ReplyRequestDto("작성자1", "내용2");
         String url = "/api/reply/" + newPost.getId();
 
         this.mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(input)))
+                .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -60,14 +56,12 @@ public class ReplyApiControllerTests {
         postRepository.save(newPost);
         Reply newReply = new Reply("작성자1", "내용2", newPost);
         replyRepository.save(newReply);
-        Map<String, String> input = new HashMap<>();
-        input.put("writer", "작성자2");
-        input.put("content", "내용4");
+        ReplyRequestDto requestDto = new ReplyRequestDto("작성자2", "내용3");
         String url = "/api/reply/" + newReply.getId();
 
         this.mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(input)))
+                .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
                 .andDo(print());
     }

@@ -2,6 +2,7 @@ package com.example.blog.controller.api;
 
 import com.example.blog.domain.Post;
 import com.example.blog.domain.PostRepository;
+import com.example.blog.dto.PostRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,13 +33,11 @@ public class PostApiControllerTests {
 
     @Test
     void createPostTest() throws Exception {
-        Map<String, String> input = new HashMap<>();
-        input.put("title", "제목1");
-        input.put("content", "내용1");
+        PostRequestDto requestDto = new PostRequestDto("제목1", "내용1");
 
         this.mockMvc.perform(post("/api/post")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(input)))
+                .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -50,14 +46,12 @@ public class PostApiControllerTests {
     void updatePostTest() throws Exception {
         Post newPost = new Post("제목1", "내용1");
         postRepository.save(newPost);
-        Map<String, String> input = new HashMap<>();
-        input.put("title", "제목2");
-        input.put("content", "내용2");
+        PostRequestDto requestDto = new PostRequestDto("제목2", "내용2");
         String url = "/api/post/" + newPost.getId();
 
         this.mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(input)))
+                .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
                 .andDo(print());
     }

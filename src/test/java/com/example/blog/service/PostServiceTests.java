@@ -2,6 +2,8 @@ package com.example.blog.service;
 
 import com.example.blog.domain.Post;
 import com.example.blog.domain.PostRepository;
+import com.example.blog.domain.Reply;
+import com.example.blog.domain.ReplyRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PostServiceTests {
     @Autowired
     PostService postService;
-
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    ReplyRepository replyRepository;
 
     @AfterEach
     void afterEach() {
+        replyRepository.deleteAll();
         postRepository.deleteAll();
     }
 
@@ -47,6 +51,8 @@ public class PostServiceTests {
     void deletePostTest() {
         Post newPost = new Post("테스트1", "테스트 내용1");
         postRepository.save(newPost);
+        Reply newReply = new Reply("작성자1", "내용2", newPost);
+        replyRepository.save(newReply);
 
         // test
         postService.deletePost(newPost.getId());
