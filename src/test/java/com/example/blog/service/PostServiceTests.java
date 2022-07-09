@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -58,5 +60,31 @@ public class PostServiceTests {
         postService.deletePost(newPost.getId());
 
         assertThat(postRepository.count()).isEqualTo(0L);
+    }
+
+    @Test
+    void readAllTest() throws Exception {
+        Post newPost1 = new Post("제목1", "내용1");
+        Post newPost2 = new Post("제목2", "내용2");
+        postRepository.save(newPost1);
+        postRepository.save(newPost2);
+
+        // test
+        List<Post> readAll = postService.readAll();
+
+        assertThat(readAll.size()).isEqualTo(2);
+        assertThat(readAll.get(0).getTitle()).isEqualTo("제목1");
+        assertThat(readAll.get(1).getContent()).isEqualTo("내용2");
+    }
+
+    @Test
+    void readOneTest() throws Exception {
+        Post newPost = new Post("제목1", "내용1");
+        postRepository.save(newPost);
+
+        // test
+        Post readOne = postService.readOne(newPost.getId());
+
+        assertThat(readOne.getContent()).isEqualTo("내용1");
     }
 }

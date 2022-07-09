@@ -19,7 +19,11 @@
             <div>
                 <ul th:each="post : ${posts}">
                     <li>
-                        <p th:text="${post.title}"></p> 
+                        <a th:href="@{/detail/{id}(id=${post.id})}">
+                            <h3 th:text="${post.title}"></h3>
+                        </a> 
+                        <p th:text="${post.createdDate}"></p>
+                        <p th:text="${post.content}"></p>
                     </li>
                 </ul>
             </div>

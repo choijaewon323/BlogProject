@@ -21,6 +21,11 @@ public class PostService {
         return findAll;
     }
 
+    public Post readOne(Long id) {
+        Post findOne = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+        return findOne;
+    }
+
     @Transactional
     public void createPost(String title, String content) {
         Post newPost = new Post(title, content);
