@@ -17,8 +17,8 @@
                 </li>
             </ul>
             <div>
-                <ul th:each="post : ${posts}">
-                    <li>
+                <ul th:each="post : ${posts}" class="list-group">
+                    <li class="list-group-item">
                         <a th:href="@{/detail/{id}(id=${post.id})}">
                             <h3 th:text="${post.title}"></h3>
                         </a> 

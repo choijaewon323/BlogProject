@@ -18,8 +18,24 @@
             <p th:text="${post.content}"></p>
             <button id="updateButtonClicked" class="btn btn-light">수정</button>
             <button id="deletePost" class="btn btn-light">삭제</button>
-
+            
+            <div>
+                <ul id="replies" th:each="reply : ${replies}">
+                    <li>
+                        <input name="replyID" th:value="${reply.id}" hidden>
+                        <p>작성자 : <span th:text="${reply.writer}"></span></p>
+                        <p th:text="${reply.createdDate}"></p>
+                        <p th:text="${reply.content}"></p>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <p>작성자 : <input id="replyWriter"></p>
+                <textarea id="replyContent"></textarea>
+                <button id="createReply">작성</button>
+            </div>
         </div>
+
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

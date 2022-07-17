@@ -8,11 +8,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ReplyService {
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
+
+    public List<Reply> findAll(Long postID) {
+        Post post = postRepository.findById(postID).orElseThrow(() -> new IllegalArgumentException());
+        List<Reply> result = replyRepository.findAllByPost(post).orElseThrow(() -> new IllegalArgumentException());
+        return result;
+    }
+
+    public Reply findOne(Long replyID) {
+        Reply result = replyRepository.findById(replyID).orElseThrow(() -> new IllegalArgumentException());
+        return result;
+    }
 
     @Transactional
     public void createReply(String writer, String content, Long postID) {

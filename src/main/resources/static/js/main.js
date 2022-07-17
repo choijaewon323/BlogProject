@@ -3,6 +3,7 @@ let createPost = document.getElementById("createPost");
 let updatePost = document.getElementById("updatePost");
 let updateButtonClicked = document.getElementById("updateButtonClicked");
 let deletePost = document.getElementById("deletePost");
+let createReply = document.getElementById("createReply");
 
 if (createButtonClicked !== null) {
     createButtonClicked.addEventListener('click', function() {
@@ -74,6 +75,29 @@ if (deletePost !== null) {
             window.location.href = "/"
         }).fail(function(error) {
             alert(error)
+        })
+    })
+}
+
+if (createReply !== null) {
+    createReply.addEventListener('click', function() {
+        let replyWriter = document.getElementById("replyWriter");
+        let replyContent = document.getElementById("replyContent");
+        let postID = document.getElementById("postID");
+        let data = {
+            'writer' : replyWriter.value,
+            'content' : replyContent.value
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/api/reply/" + postID.value,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8"
+        }).done(function() {
+            window.location.href = "/detail/" + postID.value;
+        }).fail(function(error) {
+            alert(error);
         })
     })
 }

@@ -1,6 +1,7 @@
 package com.example.blog.controller;
 
 import com.example.blog.service.PostService;
+import com.example.blog.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class MainController {
     private final PostService postService;
+    private final ReplyService replyService;
 
     @GetMapping("/")
     public String getMain(Model model) {
@@ -33,6 +35,7 @@ public class MainController {
     @GetMapping("/detail/{id}")
     public String getDetail(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.readOne(id));
+        model.addAttribute("replies", replyService.findAll(id));
 
         return "detail";
     }
