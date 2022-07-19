@@ -5,6 +5,8 @@ let updateButtonClicked = document.getElementById("updateButtonClicked");
 let deletePost = document.getElementById("deletePost");
 let createReply = document.getElementById("createReply");
 
+let replyUpdate = document.getElementById("replyUpdate");
+
 if (createButtonClicked !== null) {
     createButtonClicked.addEventListener('click', function() {
         window.location.href = "/create"
@@ -96,6 +98,49 @@ if (createReply !== null) {
             contentType: "application/json; charset=utf-8"
         }).done(function() {
             window.location.href = "/detail/" + postID.value;
+        }).fail(function(error) {
+            alert(error);
+        })
+    })
+}
+
+function replyUpdateClicked(replyID) {
+    window.open("/update/detail/" + replyID, 'Child', 'width=400, height=400');
+}
+
+function replyDelete(replyID) {
+    let postID = document.getElementById('postID');
+
+    $.ajax({
+        type: "DELETE",
+        url: "/api/reply/" + replyID
+    }).done(function() {
+        window.location.href = "/detail/" + postID.value;
+    }).fail(function(error) {
+        alert(error);
+    })
+}
+
+if (replyUpdate !== null) {
+    replyUpdate.addEventListener('click', function() {
+        let writer = document.getElementById("writer");
+        let content = document.getElementById("content");
+        let replyID = document.getElementById("replyID");
+        let postID = document.getElementById("postID");
+
+        let data = {
+            writer: writer.value,
+            content: content.value
+        }
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/reply/" + replyID.value,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8"
+        }).done(function() {
+            window.opener.location.href = "/detail/" + postID.value;
+            window.close();
         }).fail(function(error) {
             alert(error);
         })

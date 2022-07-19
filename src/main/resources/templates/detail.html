@@ -20,19 +20,21 @@
             <button id="deletePost" class="btn btn-light">삭제</button>
             
             <div>
-                <ul id="replies" th:each="reply : ${replies}">
-                    <li>
-                        <input name="replyID" th:value="${reply.id}" hidden>
+                <ul id="replies" th:each="reply : ${replies}" class="list-group">
+                    <li class="list-group-item">
+                        <input class="replyID" th:value="${reply.id}" hidden>
                         <p>작성자 : <span th:text="${reply.writer}"></span></p>
                         <p th:text="${reply.createdDate}"></p>
                         <p th:text="${reply.content}"></p>
+                        <button class="btn btn-light" th:onclick="'replyUpdateClicked(' + ${reply.id} + ')'">수정</button>
+                        <button class="btn btn-light" th:onclick="'replyDelete(' + ${reply.id} + ')'">삭제</button>
                     </li>
                 </ul>
             </div>
             <div>
-                <p>작성자 : <input id="replyWriter"></p>
-                <textarea id="replyContent"></textarea>
-                <button id="createReply">작성</button>
+                <p>작성자 : <input id="replyWriter" class="form-control"></p>
+                <textarea id="replyContent" class="form-control"></textarea>
+                <button id="createReply" class="btn btn-light">작성</button>
             </div>
         </div>
 

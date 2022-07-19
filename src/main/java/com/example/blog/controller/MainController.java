@@ -31,6 +31,12 @@ public class MainController {
 
         return "update";
     }
+    @GetMapping("/update/detail/{replyID}")
+    public String updateDetail(@PathVariable Long replyID, Model model) {
+        model.addAttribute("reply", replyService.findOne(replyID));
+
+        return "replyUpdate";
+    }
 
     @GetMapping("/detail/{id}")
     public String getDetail(@PathVariable Long id, Model model) {
