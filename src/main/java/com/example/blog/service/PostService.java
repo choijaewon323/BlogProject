@@ -26,6 +26,16 @@ public class PostService {
         return findOne;
     }
 
+    public List<Post> findByTitle(String title) {
+        List<Post> results = postRepository.findAllByTitleContains(title);
+        return results;
+    }
+
+    public List<Post> findByContent(String content) {
+        List<Post> results = postRepository.findAllByContentContains(content);
+        return results;
+    }
+
     @Transactional
     public void createPost(String title, String content) {
         Post newPost = new Post(title, content);

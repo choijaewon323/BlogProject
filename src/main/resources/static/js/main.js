@@ -3,9 +3,32 @@ let createPost = document.getElementById("createPost");
 let updatePost = document.getElementById("updatePost");
 let updateButtonClicked = document.getElementById("updateButtonClicked");
 let deletePost = document.getElementById("deletePost");
+let keyword = document.getElementById("keyword");
 let createReply = document.getElementById("createReply");
-
 let replyUpdate = document.getElementById("replyUpdate");
+let main = document.getElementById("main");
+
+if (main !== null) {
+    main.addEventListener('click', function() {
+        window.location.href = "/";
+    })
+}
+
+if (keyword !== null) {
+    let searchClicked = document.getElementById("searchClicked");
+
+    searchClicked.addEventListener('click', function() {
+        let key = keyword.options[keyword.selectedIndex].value;
+        let findContent = document.getElementById("findContent");
+    
+        if (key === 'titleSelected') {
+            window.location.href = "/?title=" + findContent.value;
+        }
+        else {
+            window.location.href = "/?content=" + findContent.value;
+        }
+    })
+} 
 
 if (createButtonClicked !== null) {
     createButtonClicked.addEventListener('click', function() {

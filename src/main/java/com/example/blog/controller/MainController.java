@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
@@ -15,8 +16,15 @@ public class MainController {
     private final ReplyService replyService;
 
     @GetMapping("/")
-    public String getMain(Model model) {
-        model.addAttribute("posts", postService.readAll());
+    public String getMain(Model model, @RequestParam(required = false) String title, @RequestParam(required = false) String content) {
+        if (title == null && content == null) {
+            model.addAttribute("posts", postService.readAll());
+        } else if (title != null && content == null) {
+            model.addAttribute("posts", postService.findByTitle(title));
+        } else {
+            model.addAttribute("posts", postService.findByContent(content));
+        }
+
         return "main";
     }
 

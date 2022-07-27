@@ -87,4 +87,32 @@ public class PostServiceTests {
 
         assertThat(readOne.getContent()).isEqualTo("내용1");
     }
+
+    @Test
+    void findByTitleTest() throws Exception {
+        Post post1 = new Post("제목1", "내용1");
+        Post post2 = new Post("안녕", "반갑습니다");
+        postRepository.save(post1);
+        postRepository.save(post2);
+
+        // test
+        List<Post> results = postService.findByTitle("안");
+
+        assertThat(results.size()).isEqualTo(1);
+        assertThat(results.get(0).getTitle()).isEqualTo("안녕");
+    }
+
+    @Test
+    void findByContentTest() throws Exception {
+        Post post1 = new Post("제목1", "내용1");
+        Post post2 = new Post("안녕", "반갑습니다");
+        postRepository.save(post1);
+        postRepository.save(post2);
+
+        // test
+        List<Post> results = postService.findByContent("반갑");
+
+        assertThat(results.size()).isEqualTo(1);
+        assertThat(results.get(0).getContent()).isEqualTo("반갑습니다");
+    }
 }

@@ -9,13 +9,26 @@
     <body>
         <div class="container">
 
-            <h1 class="display-3 center-block">재원블로그</h1>
+            <h1 id="main" class="display-3 center-block">재원블로그</h1>
             
             <ul class="nav">
                 <li class="nav-item">
                     <button id="createButtonClicked" class="btn btn-light">게시물 추가</button>
                 </li>
+                <li class="nav-item">
+                    <select class="form-select" id="keyword">
+                        <option value="titleSelected">제목</option>
+                        <option value="contentSelected">내용</option>
+                    </select>
+                </li>
+                <li class="nav-item">
+                    <input class="form-control" id="findContent">
+                </li>
+                <li>
+                    <button class="btn btn-default" id="searchClicked">검색</button>
+                </li>
             </ul>
+
             <div>
                 <ul th:each="post : ${posts}" class="list-group">
                     <li class="list-group-item">
