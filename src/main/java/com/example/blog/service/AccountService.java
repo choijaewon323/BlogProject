@@ -17,7 +17,7 @@ public class AccountService {
             Account test = accountRepository.findByUsername(requestDto.getUsername())
                     .orElseThrow(() -> new IllegalArgumentException());
 
-            if (test.getPassword() == requestDto.getPassword()) {
+            if (test.getPassword().equals(requestDto.getPassword())) {
                 return true;
             }
             else {

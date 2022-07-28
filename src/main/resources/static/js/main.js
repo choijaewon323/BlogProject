@@ -7,6 +7,63 @@ let keyword = document.getElementById("keyword");
 let createReply = document.getElementById("createReply");
 let replyUpdate = document.getElementById("replyUpdate");
 let main = document.getElementById("main");
+let newAccount = document.getElementById("newAccount");
+let login = document.getElementById("login");
+
+if (login !== null) {
+    login.addEventListener('click', function() {
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+        let data = {
+            username: username.value,
+            password: password.value
+        };
+
+        $.ajax({
+            url: "/api/login",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function(e) {
+            if (e === false) {
+                alert("아이디 혹은 비밀번호가 틀립니다.");
+            }
+            else {
+                window.location.href = "/";
+            }
+        }).fail(function(error) {
+            alert(error);
+        })
+    })
+}
+
+if (newAccount !== null) {
+    newAccount.addEventListener('click', function() {
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+        let data = {
+            username: username.value,
+            password: password.value
+        };
+
+        $.ajax({
+            url: "/api/account",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function(e) {
+            if (e === false) {
+                alert("이미 존재하는 아이디입니다.");
+            }
+            else {
+                window.location.href = "/login";
+            }
+        }).fail(function(error) {
+            alert(error);
+        })
+    })
+}
+
 
 if (main !== null) {
     main.addEventListener('click', function() {
