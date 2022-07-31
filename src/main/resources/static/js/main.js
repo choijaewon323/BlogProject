@@ -9,6 +9,27 @@ let replyUpdate = document.getElementById("replyUpdate");
 let main = document.getElementById("main");
 let newAccount = document.getElementById("newAccount");
 let login = document.getElementById("login");
+let logout = document.getElementById("logout");
+
+if (logout !== null) {
+    logout.addEventListener('click', function() {
+        let username = document.getElementById("username");
+        let data = {
+            username: username.value
+        }
+
+        $.ajax({
+            url: "/api/logout",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function() {
+            window.location.href = "/login";
+        }).fail(function(error) {
+            alert(error);
+        })
+    })
+}
 
 if (login !== null) {
     login.addEventListener('click', function() {

@@ -1,6 +1,7 @@
 package com.example.blog.controller;
 
 import com.example.blog.common.SessionCommon;
+import com.example.blog.dto.AccountRequestDto;
 import com.example.blog.service.PostService;
 import com.example.blog.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,6 +34,9 @@ public class MainController {
         if (!SessionCommon.isConfirm(request)) {
             return "login";
         }
+
+        HttpSession session = request.getSession();
+        model.addAttribute("account", (AccountRequestDto) session.getAttribute("success") );
 
         if (title == null && content == null) {
             model.addAttribute("posts", postService.readAll());

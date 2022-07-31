@@ -14,6 +14,13 @@ import javax.servlet.http.HttpSession;
 public class AccountApiController {
     private final AccountService accountService;
 
+    @PostMapping("/api/logout")
+    public void logout(HttpServletRequest request, @RequestBody AccountRequestDto requestDto) {
+        HttpSession session = request.getSession();
+        session.getAttribute("success");
+        session.invalidate();
+    }
+
     @PostMapping("/api/login")
     public Boolean login(HttpServletRequest request, @RequestBody AccountRequestDto requestDto) {
         if (accountService.login(requestDto)) {
