@@ -44,7 +44,11 @@ public class AccountApiController {
     }
 
     @DeleteMapping("/api/account")
-    public void deleteAccount(@RequestBody AccountRequestDto requestDto) {
+    public void deleteAccount(HttpServletRequest request,
+            @RequestBody AccountRequestDto requestDto) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+
         accountService.delete(requestDto);
     }
 }

@@ -11,6 +11,51 @@ let newAccount = document.getElementById("newAccount");
 let login = document.getElementById("login");
 let logout = document.getElementById("logout");
 
+let updateAccount = document.getElementById("updateAccount");
+let deleteAccount = document.getElementById("deleteAccount");
+
+if (updateAccount !== null) {
+    updateAccount.addEventListener('click', function() {
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+        let data = {
+            username: username.value,
+            password: password.value
+        }
+
+        $.ajax({
+            method: "PUT",
+            url: "/api/account",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function() {
+            window.location.href = "/account/" + username.value;
+        }).fail(function(error) {
+            alert(error);
+        })
+    })
+}
+
+if (deleteAccount !== null) {
+    deleteAccount.addEventListener('click', function() {
+        let username = document.getElementById("username");
+        let data = {
+            username: username.value
+        }
+
+        $.ajax({
+            method: "DELETE",
+            url: "/api/account",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function() {
+            window.location.href = "/login";
+        }).fail(function(error) {
+            alert(error);
+        })
+    })
+}
+
 if (logout !== null) {
     logout.addEventListener('click', function() {
         let username = document.getElementById("username");

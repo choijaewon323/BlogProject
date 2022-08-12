@@ -28,6 +28,32 @@ public class MainController {
         return "newAccount";
     }
 
+    @GetMapping("/account/{username}")
+    public String getUserDetail(Model model, HttpServletRequest request,
+                                @PathVariable String username) {
+        if (!SessionCommon.isConfirm(request)) {
+            return "login";
+        }
+
+        HttpSession session = request.getSession();
+        model.addAttribute("account", (AccountRequestDto) session.getAttribute("success"));
+
+        return "myAccount";
+    }
+
+    @GetMapping("/account/update/{username}")
+    public String getUpdateAccount(Model model, HttpServletRequest request,
+                                   @PathVariable String username) {
+        if (!SessionCommon.isConfirm(request)) {
+            return "login";
+        }
+
+        HttpSession session = request.getSession();
+        model.addAttribute("account", (AccountRequestDto) session.getAttribute("success"));
+
+        return "updateAccount";
+    }
+
     @GetMapping("/")
     public String getMain(Model model, HttpServletRequest request,
                           @RequestParam(required = false) String title, @RequestParam(required = false) String content) {
