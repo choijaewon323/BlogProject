@@ -16,8 +16,7 @@ public class AccountApiController {
 
     @PostMapping("/api/logout")
     public void logout(HttpServletRequest request, @RequestBody AccountRequestDto requestDto) {
-        HttpSession session = request.getSession();
-        session.getAttribute("success");
+        HttpSession session = request.getSession(false);
         session.invalidate();
     }
 
@@ -28,9 +27,7 @@ public class AccountApiController {
             session.setAttribute("success", requestDto);
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     @PostMapping("/api/account")

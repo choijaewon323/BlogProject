@@ -20,6 +20,9 @@ public class Post extends TimeEntity {
     @Column(name = "CONTENT")
     private String content;
 
+    @Column(name = "HEART_CNT")
+    private Integer heartCnt = 0;
+
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
@@ -28,5 +31,15 @@ public class Post extends TimeEntity {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void increaseHeart() {
+        heartCnt++;
+    }
+
+    public void decreaseHeart() {
+        if (heartCnt > 0) {
+            heartCnt--;
+        }
     }
 }

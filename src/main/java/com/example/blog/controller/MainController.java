@@ -1,6 +1,5 @@
 package com.example.blog.controller;
 
-import com.example.blog.common.SessionCommon;
 import com.example.blog.dto.AccountRequestDto;
 import com.example.blog.service.PostService;
 import com.example.blog.service.ReplyService;
@@ -31,11 +30,8 @@ public class MainController {
     @GetMapping("/account/{username}")
     public String getUserDetail(Model model, HttpServletRequest request,
                                 @PathVariable String username) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         model.addAttribute("account", (AccountRequestDto) session.getAttribute("success"));
 
         return "myAccount";
@@ -44,11 +40,8 @@ public class MainController {
     @GetMapping("/account/update/{username}")
     public String getUpdateAccount(Model model, HttpServletRequest request,
                                    @PathVariable String username) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         model.addAttribute("account", (AccountRequestDto) session.getAttribute("success"));
 
         return "updateAccount";
@@ -57,11 +50,8 @@ public class MainController {
     @GetMapping("/")
     public String getMain(Model model, HttpServletRequest request,
                           @RequestParam(required = false) String title, @RequestParam(required = false) String content) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         model.addAttribute("account", (AccountRequestDto) session.getAttribute("success") );
 
         if (title == null && content == null) {
@@ -76,30 +66,18 @@ public class MainController {
     }
 
     @GetMapping("/create")
-    public String getCreatePost(HttpServletRequest request) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
+    public String getCreatePost() {
         return "create";
     }
 
     @GetMapping("/update/{id}")
-    public String getUpdatePost(HttpServletRequest request,
-            @PathVariable Long id, Model model) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
-
+    public String getUpdatePost(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.readOne(id));
 
         return "update";
     }
     @GetMapping("/update/detail/{replyID}")
-    public String updateDetail(HttpServletRequest request,
-            @PathVariable Long replyID, Model model) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
+    public String updateDetail(@PathVariable Long replyID, Model model) {
 
         model.addAttribute("reply", replyService.findOne(replyID));
 
@@ -107,11 +85,7 @@ public class MainController {
     }
 
     @GetMapping("/detail/{id}")
-    public String getDetail(HttpServletRequest request,
-            @PathVariable Long id, Model model) {
-        if (!SessionCommon.isConfirm(request)) {
-            return "login";
-        }
+    public String getDetail(@PathVariable Long id, Model model) {
 
         model.addAttribute("post", postService.readOne(id));
         model.addAttribute("replies", replyService.findAll(id));

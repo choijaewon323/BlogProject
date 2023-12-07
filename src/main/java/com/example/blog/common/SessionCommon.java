@@ -5,6 +5,7 @@ import com.example.blog.dto.AccountRequestDto;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@Deprecated
 public class SessionCommon {
     public static Boolean isConfirm(HttpServletRequest request) {
         HttpSession session = request.getSession();
